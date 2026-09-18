@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 524,
-  "version_name": "5.2.3",
-  "title": "SportsTV đã có bản mới",
-  "message": "Bổ sung add nguồn sẵn VietAnhTV, sửa lỗi phát kênh và lỗi khởi động lại bị đứng logo. Bạn nên cập nhật để sử dụng ổn định hơn.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_CloudflareSources_RestartFix_v524.apk",
+  "version_code": 525,
+  "version_name": "5.2.3-BinhPro.3",
+  "title": "SportsTV Bình Pro 5.2.3 đã có bản vá mới",
+  "message": "Đã sửa triệt để lỗi bấm kênh bị thoát, đứng logo và có hình nhưng loading mãi. Tối ưu bộ đệm phát trực tiếp, giữ nguồn Cloudflare và VietAnhTV. Bạn nên cập nhật để xem ổn định hơn.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_PlaybackCrash_BufferFix_v525.apk",
   "required": false
 }

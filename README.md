@@ -1,6 +1,6 @@
 # SportsTV · cập nhật từ xa Bình Pro
 
-Ứng dụng đọc cấu hình cập nhật tại `update.json`. Mặc định đang tắt nên người dùng không thấy thông báo khi mở app.
+Ứng dụng đọc cấu hình cập nhật tại `update.json` để thông báo bản mới khi mở app.
 
 Khi có APK mới:
 
@@ -14,8 +14,8 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 
 ## Bản đang phát hành
 
-- Version code: `524`
-- Version name: `5.2.3-BinhPro.2`
-- Tệp: `SportsTV_5.2.3_BinhPro_CloudflareSources_RestartFix_v524.apk`
-- SHA-256: `C16FC2A7B67C99583B79C9C395B1064D31046C1B98267FF25ED343450F810240`
-- Nội dung: Cloudflare Worker cho nguồn từ xa, bổ sung VietAnhTV, giữ Playback Fix và sửa nút khởi động lại bị kẹt logo.
+- Version code: `525`
+- Version name: `5.2.3-BinhPro.3`
+- Tệp: `SportsTV_5.2.3_BinhPro_PlaybackCrash_BufferFix_v525.apk`
+- SHA-256: `9D177B8EA7754F9822A27E92140FE408FD2022432DA3A134187DF1190F6BF5F1`
+- Nội dung: giữ Cloudflare Worker và VietAnhTV; sửa crash do cấu hình chứng thư sai, vô hiệu cấu hình bộ đệm lỗi từ máy chủ, phát kênh nhanh và không còn loading vô hạn.
