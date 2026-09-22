@@ -14,8 +14,8 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 
 ## Bản đang phát hành
 
-- Version code: `525`
-- Version name: `5.2.3-BinhPro.3`
-- Tệp: `SportsTV_5.2.3_BinhPro_PlaybackCrash_BufferFix_v525.apk`
-- SHA-256: `9D177B8EA7754F9822A27E92140FE408FD2022432DA3A134187DF1190F6BF5F1`
-- Nội dung: giữ Cloudflare Worker và VietAnhTV; sửa crash do cấu hình chứng thư sai, vô hiệu cấu hình bộ đệm lỗi từ máy chủ, phát kênh nhanh và không còn loading vô hạn.
+- Version code: `527`
+- Version name: `5.2.3-BinhPro.5`
+- Tệp: `SportsTV_5.2.3_BinhPro_InstantListCache_v527.apk`
+- SHA-256: `7F6067D94021FF8286121552E6C7CA771AD60D7E9B89697A8ECAD5FB3F58CB95`
+- Nội dung: giữ Cloudflare Worker và VietAnhTV; thêm HTTP client dự phòng khi Firebase Remote Config lỗi, tăng timeout hợp lý và lưu danh sách kênh gần nhất trên máy. Lần mở sau hiển thị cache trước rồi tự cập nhật ngầm, không phải chờ Worker tải xong mới xem danh sách.
