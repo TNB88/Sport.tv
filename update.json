@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 527,
-  "version_name": "5.2.3-BinhPro.5",
-  "title": "SportsTV Bình Pro — tải danh sách nhanh hơn",
-  "message": "Bản mới sửa lỗi danh sách kênh lúc có lúc không, tăng độ ổn định khi Worker hoặc Firebase phản hồi chậm. Danh sách đã lưu sẽ hiện gần như ngay lập tức, sau đó tự cập nhật ngầm; đồng thời giữ bản vá phát kênh ổn định của phiên bản trước.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_InstantListCache_v527.apk",
+  "version_code": 528,
+  "version_name": "5.2.3-BinhPro.6",
+  "title": "SportsTV Bình Pro — thêm SPORT STREAM",
+  "message": "Bản mới tích hợp lối mở nhanh SPORT STREAM ngay cạnh nút Thêm nguồn. Icon, chữ và hiệu ứng điều khiển đã được đồng bộ với giao diện SportsTV; đồng thời giữ đầy đủ bộ kích hoạt, tải danh sách tức thời và các bản vá phát kênh ổn định của v527.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStreamLauncher_v528.apk",
   "required": false
 }
