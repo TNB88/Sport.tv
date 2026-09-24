@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 528,
-  "version_name": "5.2.3-BinhPro.6",
-  "title": "SportsTV Bình Pro — thêm SPORT STREAM",
-  "message": "Bản mới tích hợp lối mở nhanh SPORT STREAM ngay cạnh nút Thêm nguồn. Icon, chữ và hiệu ứng điều khiển đã được đồng bộ với giao diện SportsTV; đồng thời giữ đầy đủ bộ kích hoạt, tải danh sách tức thời và các bản vá phát kênh ổn định của v527.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStreamLauncher_v528.apk",
+  "version_code": 529,
+  "version_name": "5.2.3-BinhPro.7",
+  "title": "SportsTV Bình Pro — SPORT STREAM TV 2.6",
+  "message": "Bản mới tích hợp SPORT STREAM TV 2.6 ngay sau nút Thêm nguồn. Module giao diện TV có 7 nhà cung cấp, không yêu cầu kích hoạt riêng và đã được nhúng sẵn trong SportsTV. Lần đầu bấm SPORT STREAM, hãy cho phép SportsTV cài ứng dụng và cài module một lần; từ lần sau thẻ sẽ mở trực tiếp. Bản này tiếp tục giữ Film Activation, danh sách tức thời và các bản vá phát kênh của SportsTV.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStreamTV26_v529.apk",
   "required": false
 }
