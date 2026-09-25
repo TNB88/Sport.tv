@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 532,
-  "version_name": "5.2.3-BinhPro.10-AllInOne-GetOut",
-  "title": "SportsTV Bình Pro — SPORT STREAM + GETOUT",
-  "message": "GETOUT đã được tích hợp trực tiếp ngay kế SPORT STREAM trong SportsTV. Chỉ cần một APK, không cài ứng dụng phụ. Bản mới giữ nguyên Film Activation, danh sách nguồn và các bản vá phát kênh; bổ sung đầy đủ giao diện, danh mục Truyền hình, Bóng đá, Tennis và trình phát nội bộ của GETOUT.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStream_GetOut_AllInOne_v532.apk",
+  "version_code": 533,
+  "version_name": "5.2.3-BinhPro.11-AllInOne-GetOut-SourceFix",
+  "title": "SportsTV Bình Pro — Sửa lỗi nguồn TV",
+  "message": "Đã sửa lỗi sau khi thêm GETOUT làm Truyền Hình TV, Thanh TV và VietAnhTV mở nhầm nguồn, màn hình đen hoặc thoát ứng dụng. Ba nguồn nay mở đúng vị trí và đã phát thử có hình, có tiếng. Bản mới vẫn tích hợp trực tiếp SPORT STREAM và GETOUT trong cùng một APK.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStream_GetOut_AllInOne_v533_SourceFix.apk",
   "required": false
 }
