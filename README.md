@@ -14,16 +14,23 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 
 ## Bản đang phát hành
 
-- Version code: `530`
-- Version name: `5.2.3-BinhPro.8-AllInOne`
-- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_SportStream_AllInOne_v530.apk`
-- SHA-256 SportsTV: `25DD54924BA90D48F30B369269A60E2DD2BE1A0922BB094EDB75144C3C02617B`
+- Version code: `532`
+- Version name: `5.2.3-BinhPro.10-AllInOne-GetOut`
+- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_SportStream_GetOut_AllInOne_v532.apk`
+- SHA-256 SportsTV: `588E89C8D7A1488BD44C46E1EE75D093FAB1F963E4439D09537C19DECC2FB799`
 - Package duy nhất: `com.sports.tv`
-- Nội dung: SPORT STREAM TV 2.6 với 7 nhà cung cấp chạy trực tiếp bên trong SportsTV. Không cài app riêng, không xin quyền cài ứng dụng không rõ nguồn gốc và không có kích hoạt thứ hai. Giữ nguyên Film Activation, Cloudflare Worker, VietAnhTV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
+- Nội dung: SPORT STREAM TV 2.6 và GETOUT đều chạy trực tiếp bên trong SportsTV. Không cài app riêng, không xin quyền cài ứng dụng không rõ nguồn gốc và không có kích hoạt thứ hai. Giữ nguyên Film Activation, Cloudflare Worker, VietAnhTV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
 
 ## Cách mở SPORT STREAM
 
-1. Cập nhật SportsTV lên bản 530.
+1. Cập nhật SportsTV lên bản 532.
 2. Bấm thẻ **SPORT STREAM** nằm ngay sau **Thêm nguồn**.
 3. SPORT STREAM mở trực tiếp trong SportsTV, không có bước cài đặt ứng dụng phụ.
 4. Khi đang xem, Back trở về danh sách SPORT STREAM; Back thêm lần nữa về SportsTV ngay, không hỏi xác nhận thoát.
+
+## Cách mở GETOUT
+
+1. Bấm thẻ **GETOUT** nằm ngay sau **SPORT STREAM**.
+2. GETOUT mở trực tiếp trong SportsTV, không cần cài APK riêng.
+3. Có thể chọn Truyền hình, Bóng đá hoặc Tennis và phát bằng trình phát tích hợp.
+4. Back thoát trình phát về GETOUT, sau đó quay lại SportsTV.

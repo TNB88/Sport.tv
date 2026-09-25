@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 530,
-  "version_name": "5.2.3-BinhPro.8-AllInOne",
-  "title": "SportsTV Bình Pro — SPORT STREAM All-in-One",
-  "message": "SPORT STREAM TV 2.6 nay đã được tích hợp trực tiếp trong SportsTV: chỉ cần một APK, không cài app riêng và không cần cấp quyền cài ứng dụng không rõ nguồn gốc. Bản mới giữ Film Activation, danh sách tức thời và các bản vá phát kênh; đồng thời bỏ hộp hỏi khi thoát SPORT STREAM. Trình phát ưu tiên chất lượng cao và tự thích ứng để phát ổn định.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStream_AllInOne_v530.apk",
+  "version_code": 532,
+  "version_name": "5.2.3-BinhPro.10-AllInOne-GetOut",
+  "title": "SportsTV Bình Pro — SPORT STREAM + GETOUT",
+  "message": "GETOUT đã được tích hợp trực tiếp ngay kế SPORT STREAM trong SportsTV. Chỉ cần một APK, không cài ứng dụng phụ. Bản mới giữ nguyên Film Activation, danh sách nguồn và các bản vá phát kênh; bổ sung đầy đủ giao diện, danh mục Truyền hình, Bóng đá, Tennis và trình phát nội bộ của GETOUT.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStream_GetOut_AllInOne_v532.apk",
   "required": false
 }
