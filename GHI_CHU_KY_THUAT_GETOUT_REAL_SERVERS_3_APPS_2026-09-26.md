@@ -43,8 +43,8 @@ URL cố định:
 
 Không đổi URL này vì SportsTV và các APK cũ đang sử dụng. Bản triển khai hoàn tất:
 
-- Worker health version: `6`
-- Deployment version ID: `757f2a54-ed57-4c2d-b722-0457b6ba1216`
+- Worker health version: `7`
+- Deployment version ID: `c262da0e-9901-4b2e-8ceb-1525ebc92519`
 - Nguồn local: `C:\SportTV\work\sportstv-playlists-worker\worker.js`
 - Bản sao GitHub: `cloudflare-worker/worker.js`
 
@@ -175,7 +175,7 @@ Xôi Lạc đọc domain theo thứ tự trong:
 
 ## 9. Kiểm thử đã thực hiện
 
-- Worker `/health`: version 6.
+- Worker `/health`: version 7.
 - Catalog: 6 provider có dữ liệu thật, 79 trận và không có dòng M3U phụ.
 - Kiểm tra `bad_count=0`: không còn bóng rổ, eSports, bóng chuyền, võ thuật hoặc
   thẻ BLV lấy từ playlist truyền hình.
@@ -190,6 +190,27 @@ Xôi Lạc đọc domain theo thứ tự trong:
 
 Việc phát hình còn phụ thuộc trận đang live và upstream tại thời điểm bấm. Resolver
 được thiết kế lấy link mới ngay lúc chọn trận để hạn chế link hết hạn.
+
+### Sửa Bông Lau và Chuối Chiên không phát ngày 2026-09-26
+
+Nguyên nhân không nằm ở URL HLS: CDN còn hoạt động nhưng trả HTTP `403` vì resolver
+dùng Referer của trang danh sách thay cho Referer riêng của máy phát. Hai provider
+cũng yêu cầu User-Agent desktop giống GETOUT.
+
+Worker version 7 xử lý như sau:
+
+- Chuối Chiên đọc `liveStreamUrl` từ trang chủ đang hoạt động và dùng giá trị này
+  làm `Referer` khi phát.
+- Bông Lau đọc `playerBaseUrl` từ trang chủ đang hoạt động và dùng giá trị này làm
+  `Referer` khi phát.
+- Dùng User-Agent Chrome desktop 116; không gửi `Origin` thừa.
+- Nếu không đọc được trang chủ, lấy domain máy phát sau dấu `|` trong cấu hình
+  dự phòng GETOUT trên GitHub; cuối cùng mới dùng giá trị an toàn tích hợp sẵn.
+- Giữ nguyên Worker URL nên cả ba APK nhận bản sửa từ xa, không cần build/cài lại.
+
+Đã kiểm tra trực tiếp cả hai provider: resolver trả 2 nguồn HD/FHD, manifest FHD
+HTTP `200`, tải thử 4096 byte của segment video HTTP `206`. Version triển khai
+Cloudflare: `c262da0e-9901-4b2e-8ceb-1525ebc92519`.
 
 ## 10. Quy trình build lại ngắn gọn
 

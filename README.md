@@ -41,9 +41,9 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 - Truyền Hình TV, Thanh TV và VietAnhTV nay mở đúng nguồn tương ứng.
 - Đã phát thử từng nguồn trên Box R 4K Plus: có hình, có tiếng và không crash.
 
-## SPORT STREAM server thật v534 / Worker football-only v6
+## SPORT STREAM server thật v534 / Worker football-only v7
 
-- Worker catalog version 6 lấy dữ liệu riêng theo từng hệ thống của GETOUT, không
+- Worker catalog version 7 lấy dữ liệu riêng theo từng hệ thống của GETOUT, không
   còn nhân một danh sách thành nhiều tên server.
 - Catalog chỉ nhận bóng đá. Đã loại bóng rổ, eSports, bóng chuyền, võ thuật và bỏ
   hoàn toàn dữ liệu M3U Truyền Hình/Thanh TV khỏi màn SPORT STREAM.

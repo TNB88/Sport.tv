@@ -30,7 +30,7 @@ Domain Xôi Lạc được quản lý từ xa tại:
 không cần build lại APK. Worker đọc lại cấu hình sau tối đa khoảng 5 phút. Danh sách
 domain tích hợp sẵn trong `worker.js` luôn được giữ làm dự phòng nếu GitHub lỗi.
 
-## Bố cục nhà cung cấp TV (catalog version 5)
+## Bố cục nhà cung cấp TV (catalog version 7)
 
 Worker lấy dữ liệu riêng theo kiến trúc thật của GETOUT, không nhân một danh sách
 thành nhiều server giả. Các nguồn đang hoạt động gồm Chuối Chiên, Bông Lau,

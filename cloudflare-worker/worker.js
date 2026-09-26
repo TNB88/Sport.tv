@@ -222,7 +222,12 @@ async function sportStreamItems() {
 }
 
 const SPORT_USER_AGENT = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/120 Mobile Safari/537.36";
+const CHUOI_PLAYER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36";
 const CHUOI_API = "https://api-v2.chuoichientv.com/v2/matches?page=1&limit=100&sport=football&type=blv";
+const CHUOI_HOME_URLS = ["https://chuoichientv.com/", "https://chuoichientv.org/"];
+const BONGLAU_HOME_URLS = ["https://laude.bonglau.tv/", "https://bonglautv.com/"];
+const CHUOI_PLAYER_FALLBACK = "https://raw.githubusercontent.com/leeshin5757/getout/main/txt/chuoichien";
+const BONGLAU_PLAYER_FALLBACK = "https://raw.githubusercontent.com/leeshin5757/getout/main/txt/bonglau";
 const COLA_APIS = [
   "https://api1.colatv88xd.cc/api/matches",
   "https://api2.colatv88xd.cc/api/matches",
@@ -402,12 +407,12 @@ function gvSources(match, providerName, referer) {
 }
 
 async function fetchChuoiPayload() {
-  const referers = ["https://live03.chuoichientv.me/", "https://live.chuoichien.tv/"];
+  const referers = ["https://chuoichientv.com/", "https://live07.chuoichientv.me/", "https://live.chuoichien.tv/"];
   for (const referer of referers) {
     try {
       const payload = await fetchJson(CHUOI_API, {
         headers: {
-          "user-agent": SPORT_USER_AGENT,
+          "user-agent": CHUOI_PLAYER_USER_AGENT,
           accept: "application/json, text/plain, */*",
           referer,
           origin: new URL(referer).origin,
@@ -419,6 +424,45 @@ async function fetchChuoiPayload() {
     }
   }
   return { matches: [], referer: referers[0] };
+}
+
+function playerBaseUrl(value) {
+  if (typeof value !== "string") return "";
+  const clean = value.trim().replace(/\/+$/, "");
+  return /^https:\/\//i.test(clean) ? `${clean}/` : "";
+}
+
+async function fetchChuoiPlayerReferer(providerId) {
+  const isBongLau = providerId === "bonglau";
+  const homeUrls = isBongLau ? BONGLAU_HOME_URLS : CHUOI_HOME_URLS;
+  const field = isBongLau ? "playerBaseUrl" : "liveStreamUrl";
+  const expression = new RegExp(`${field}\\s*:\\s*["'](https?:\\/\\/[^"']+)["']`, "i");
+
+  for (const homeUrl of homeUrls) {
+    try {
+      const html = await fetchText(homeUrl, {
+        headers: { "user-agent": CHUOI_PLAYER_USER_AGENT, accept: "text/html,*/*" },
+      }, 60);
+      const match = html.match(expression);
+      const resolved = playerBaseUrl(match?.[1]);
+      if (resolved) return resolved;
+    } catch (_) {
+      // Thử domain trang chủ tiếp theo.
+    }
+  }
+
+  try {
+    const fallbackUrl = isBongLau ? BONGLAU_PLAYER_FALLBACK : CHUOI_PLAYER_FALLBACK;
+    const fallbackText = await fetchText(fallbackUrl, {
+      headers: { "user-agent": CHUOI_PLAYER_USER_AGENT, accept: "text/plain,*/*" },
+    }, 300);
+    const resolved = playerBaseUrl(fallbackText.trim().split("|").pop());
+    if (resolved) return resolved;
+  } catch (_) {
+    // Giá trị an toàn bên dưới giữ app phát được nếu cả trang chủ và cấu hình dự phòng lỗi.
+  }
+
+  return isBongLau ? "https://tructiep.bonglau.live/" : "https://fhd-01.cctvsignal.xyz/";
 }
 
 function chuoiBlvs(match, providerId) {
@@ -454,12 +498,12 @@ async function fetchChuoiRows(providerId) {
     });
 }
 
-function chuoiSources(match, providerId, referer) {
+async function chuoiSources(match, providerId) {
   const provider = providerById(providerId);
+  const referer = await fetchChuoiPlayerReferer(providerId);
   const collector = sourceCollector(provider.name, {
     Referer: referer,
-    Origin: new URL(referer).origin,
-    "User-Agent": SPORT_USER_AGENT,
+    "User-Agent": CHUOI_PLAYER_USER_AGENT,
   });
   for (const blv of chuoiBlvs(match, providerId)) {
     const name = blv.name || blv.username || "Bình luận viên";
@@ -742,7 +786,7 @@ async function sportStreamResolve(id, matchKey, providerId) {
   } else if (providerId === "chuoichien" || providerId === "bonglau") {
     const rows = await fetchChuoiRows(providerId);
     const row = rows.find((item) => item.key === matchKey);
-    if (row) sources = chuoiSources(row._raw, providerId, row._referer);
+    if (row) sources = await chuoiSources(row._raw, providerId);
   } else if (providerId === "colatv" || providerId === "xoilacxth") {
     const rows = await fetchGvRows(providerId);
     const row = rows.find((item) => item.key === matchKey);
@@ -769,7 +813,7 @@ export default {
       return json({
         ok: true,
         service: "Bình Pro SportsTV Sources",
-        version: 6,
+        version: 7,
         source_count: Object.values(SOURCES).filter((item) => item.enabled).length,
       });
     }
