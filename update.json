@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 535,
-  "version_name": "5.2.3-BinhPro.13-FullSchedule",
-  "title": "SportsTV Bình Pro — Lịch bóng đá đầy đủ",
-  "message": "SPORT STREAM đã trả lại toàn bộ lịch từ các nguồn thật, hiện đúng cờ/logo hai đội và tải logo nền để tránh treo khi có nhiều trận. Thứ tự ưu tiên: Xôi Lạc, Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive và Bông Lau.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk",
+  "version_code": 536,
+  "version_name": "5.2.3-BinhPro.14-ProviderOrder",
+  "title": "SportsTV Bình Pro — Nguồn bóng đá tối ưu",
+  "message": "Sắp đúng thứ tự Xôi Lạc, Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive và Bông Lau cuối. Logo Bông Lau/SoCoLive nền trong suốt; Chuối Chiên và Bông Lau hiện đủ 17 lịch, SoCoLive mở rộng lên khoảng 85 lịch bóng đá có phòng BLV thật.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v536_ProviderOrder_TransparentLogos.apk",
   "required": false
 }

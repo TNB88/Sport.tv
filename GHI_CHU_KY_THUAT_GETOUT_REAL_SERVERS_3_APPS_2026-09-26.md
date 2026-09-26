@@ -7,11 +7,11 @@ Người quản lý: Bình Pro
 
 ### SportsTV tích hợp tất cả — bản mới nhất
 
-- Tệp: `SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk`
+- Tệp: `SportsTV_5.2.3_BinhPro_v536_ProviderOrder_TransparentLogos.apk`
 - Package: `com.sports.tv`
-- Version code: `535`
-- Version name: `5.2.3-BinhPro.13-FullSchedule`
-- SHA-256: `91BE86BCF0D7724C956B44AAB3920547DCC628683D7680D5794947A654AD0C9E`
+- Version code: `536`
+- Version name: `5.2.3-BinhPro.14-ProviderOrder`
+- SHA-256: `756DBA12A406582EB0BAD4774ABE040BE33486FF211EDE2E0380C2564DC8B852`
 - Chứng thư ký SHA-256: `B86FA822BA42414127635B5D830CF98855043B892A1480AA2EC446C599C847EA`
 
 ### SPORT STREAM TV độc lập
@@ -20,7 +20,7 @@ Người quản lý: Bình Pro
 - Package: `com.vxm.sport.mobile`
 - Version code: `15`
 - Version name: `2.6-BinhPro-Adaptive1080-BLV-TV-Activation`
-- SHA-256: `8046B8A6DD1D2E7388CF6A87705A57A6772DBCF613430DB10E96B56369CCB7AC`
+- SHA-256: `0695F6F845FAC2BB5C3115DCCF0D1D3C5152395BF3D70C1FD9345D67271D8708`
 - Chứng thư ký SHA-256: `4044294B7A4EC4A1E88A6EF082EADD7CCD344F9509CE49D4BFF65F00E656216A`
 
 ### SPORT STREAM Mobile độc lập
@@ -29,7 +29,7 @@ Người quản lý: Bình Pro
 - Package: `com.vxm.sport.mobile`
 - Version code: `14`
 - Version name: `2.6-BinhPro-Adaptive1080-BLV-Mobile`
-- SHA-256: `591A2E979B82DBC9E029852C1F0A421935EF1FA9B3E4EF2DD47882F6E3B01421`
+- SHA-256: `19369AC52E7C5C07396F4FA91ADA125375A24C20811DA2B28BCE3D41A4615EF3`
 - Chứng thư ký SHA-256: `4044294B7A4EC4A1E88A6EF082EADD7CCD344F9509CE49D4BFF65F00E656216A`
 
 Hai APK SPORT STREAM TV và Mobile cùng package, vì vậy chỉ cài một bản phù hợp
@@ -43,8 +43,8 @@ URL cố định:
 
 Không đổi URL này vì SportsTV và các APK cũ đang sử dụng. Bản triển khai hoàn tất:
 
-- Worker health version: `13`
-- Deployment version ID: `4c80d9ae-5546-4c8a-b25a-7603dbc6e47e`
+- Worker health version: `15`
+- Deployment version ID: `e3601089-d777-4549-96c8-a3da5619d7f7`
 - Nguồn local: `C:\SportTV\work\sportstv-playlists-worker\worker.js`
 - Bản sao GitHub: `cloudflare-worker/worker.js`
 
@@ -92,9 +92,20 @@ adapter API GETOUT riêng trả đúng trận bóng đá. Provider lỗi/rỗng 
   vào nhầm ô.
 
 Tại thời điểm kiểm thử Worker trả 6 provider có dữ liệu thật; số trận thay đổi theo
-upstream (lần kiểm tra Worker v13 trả 148 trận bóng đá):
+upstream (lần kiểm tra Worker v15 trả 251 trận bóng đá):
 Chuối Chiên, Bông Lau, COLA TV, Giờ Vàng, SoCoLive và Xôi Lạc. Resolver mẫu của
 cả 6 provider đều trả nguồn. Gà Vàng 33 tự ẩn vì API thật đang không có trận.
+
+Số lượng lúc chốt: Xôi Lạc 58, Giờ Vàng 16, COLA TV 58, Chuối Chiên 17,
+SoCoLive 85 và Bông Lau 17. Chuối Chiên/Bông Lau không còn dùng `type=blv`
+vì tham số đó chỉ trả 2-3 trận đã có link. Endpoint lịch bóng đá đầy đủ cho hiện
+cả trận **Chờ BLV**; resolver gọi lại API lúc người dùng bấm nên link vừa được
+công bố gần giờ đá sẽ dùng ngay mà không cần build APK mới.
+
+SoCoLive dùng lịch đầy đủ `matches.json`, sau đó ghép `match_recommend.json` và
+phòng bóng đá live thật từ `all_live_rooms.json`. Nhiều phòng cùng trận được gộp
+thành các lựa chọn BLV. Chỉ giữ trận có `roomNum` thật; không chép lịch nguồn
+khác sang SoCoLive để làm số lượng ảo.
 
 Worker không còn giới hạn tạm 3 trận mỗi provider. Thứ tự từ xa là: Xôi Lạc,
 Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive, rồi Bông Lau cuối cùng. Provider lỗi
@@ -144,13 +155,17 @@ logo đã cache bằng `BitmapFactory.decodeFile` ngay trên UI thread; sau đó
 `MainActivity.J(Bitmap)` còn quét từng pixel để cắt nền. Khi gần 80 thẻ trở lên,
 box 32-bit có thể báo ANR trong lúc dựng danh sách.
 
-Bản v535 và hai APK độc lập mới xử lý như sau:
+Bản v536 và hai APK độc lập mới xử lý như sau:
 
 - File cache cũng được chuyển qua executor tải ảnh nền có sẵn trong app.
 - `J(Bitmap)` trả lại bitmap đã chuẩn bị, không quét toàn bộ pixel trên UI thread.
 - Vẫn giữ tag URL trên `ImageView`, tránh ảnh tải trễ gắn nhầm trận.
 - Worker trả toàn bộ lịch thật và đủ `home_logo`/`away_logo`; không thay bằng icon
   quả bóng chung.
+- Bỏ lệnh sort alphabet trong ba biến thể APK, giữ đúng thứ tự provider Worker:
+  Xôi Lạc, Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive, Bông Lau.
+- Logo provider tải từ HTTPS luôn giữ `ImageView` hiển thị; ô chữ viết tắt nền đỏ
+  chỉ còn là dự phòng thật sự khi không có URL logo.
 
 Các file đã vá:
 
@@ -176,12 +191,12 @@ Kho:
 
 `https://github.com/TNB88/Sport.tv`
 
-`update.json` của bản 535:
+`update.json` của bản 536:
 
 - `enabled`: `true`
-- `version_code`: `535`
-- `version_name`: `5.2.3-BinhPro.13-FullSchedule`
-- `apk_url`: URL raw tới APK `SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk`
+- `version_code`: `536`
+- `version_name`: `5.2.3-BinhPro.14-ProviderOrder`
+- `apk_url`: URL raw tới APK `SportsTV_5.2.3_BinhPro_v536_ProviderOrder_TransparentLogos.apk`
 - `required`: `false`
 
 Lần sau phát hành phải tăng `version_code`; chỉ đổi tên tệp APK mà không tăng mã
@@ -201,14 +216,14 @@ Xôi Lạc đọc domain theo thứ tự trong:
 
 ## 9. Kiểm thử đã thực hiện
 
-- Worker `/health`: version 13.
-- Catalog: 6 provider có dữ liệu thật, 148 trận tại thời điểm kiểm tra; số lượng
+- Worker `/health`: version 15.
+- Catalog: 6 provider có dữ liệu thật, 251 trận tại thời điểm kiểm tra; số lượng
   thay đổi theo upstream và không còn bị cắt xuống 3 trận mỗi nguồn.
-- Cả 148 thẻ kiểm tra đều có `home_logo` và `away_logo`; thứ tự provider đúng yêu cầu.
+- Thứ tự provider đúng yêu cầu; logo provider SoCoLive/Bông Lau nền trong suốt.
 - Kiểm tra `bad_count=0`: không còn bóng rổ, eSports, bóng chuyền, võ thuật hoặc
   thẻ BLV lấy từ playlist truyền hình.
 - Gọi resolver mẫu của cả 6 provider: đều có nguồn.
-- Cài đè SportsTV v534 trên Box R 4K Plus qua ADB: thành công, giữ dữ liệu.
+- Cài đè SportsTV v536 trên Samsung Fold qua ADB: thành công, giữ dữ liệu.
 - SportsTV mở danh sách chính và mục SPORT STREAM nhúng không crash.
 - Catalog SPORT STREAM hiển thị nhóm provider động; logcat không có
   `FATAL EXCEPTION` của app trong ca kiểm thử.
@@ -238,7 +253,7 @@ Worker version 13 tiếp tục giữ bản sửa phát từ version 7 như sau:
 
 Đã kiểm tra trực tiếp cả hai provider: resolver trả 2 nguồn HD/FHD, manifest FHD
 HTTP `200`, tải thử 4096 byte của segment video HTTP `206`. Version triển khai
-Cloudflare mới nhất: `4c80d9ae-5546-4c8a-b25a-7603dbc6e47e`.
+Cloudflare mới nhất: `e3601089-d777-4549-96c8-a3da5619d7f7`.
 
 ## 10. Quy trình build lại ngắn gọn
 

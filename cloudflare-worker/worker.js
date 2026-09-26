@@ -35,7 +35,7 @@ const SPORT_STREAM_PROVIDERS = [
   {
     id: "socolive",
     name: "SoCoLive",
-    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/socolive-logo-transparent.png",
+    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/socolive-logo-transparent.png?v=20260927",
   },
   {
     id: "khandai",
@@ -47,7 +47,7 @@ const SPORT_STREAM_PROVIDERS = [
   {
     id: "bonglau",
     name: "Bông Lau",
-    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/bonglau-logo.png",
+    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/bonglau-logo.png?v=20260927",
   },
 ];
 
@@ -226,7 +226,10 @@ async function sportStreamItems() {
 
 const SPORT_USER_AGENT = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/120 Mobile Safari/537.36";
 const CHUOI_PLAYER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36";
-const CHUOI_API = "https://api-v2.chuoichientv.com/v2/matches?page=1&limit=100&sport=football&type=blv";
+// Do not add `type=blv` here. That view only returns matches whose stream URL
+// has already been published (usually 2-3 matches). The football schedule
+// endpoint returns the full day; its BLV stream is filled in near kick-off.
+const CHUOI_API = "https://api-v2.chuoichientv.com/v2/matches?page=1&limit=100&sport=football";
 const CHUOI_HOME_URLS = ["https://chuoichientv.com/", "https://chuoichientv.org/"];
 const BONGLAU_HOME_URLS = ["https://laude.bonglau.tv/", "https://bonglautv.com/"];
 const CHUOI_PLAYER_FALLBACK = "https://raw.githubusercontent.com/leeshin5757/getout/main/txt/chuoichien";
@@ -238,6 +241,8 @@ const COLA_APIS = [
 ];
 const GIOVANG_BASE = "https://live-api.keonhacaitp.one";
 const SOCOLIVE_RECOMMEND = "https://json.vnres.co/match_recommend.json";
+const SOCOLIVE_MATCHES = "https://json.vnres.co/matches.json";
+const SOCOLIVE_ALL_LIVE = "https://json.vnres.co/all_live_rooms.json";
 const GAVANG_REMOTE_CONFIG = "https://raw.githubusercontent.com/leeshin5757/getout/main/txt/gavangtv";
 
 function matchTimeMs(match) {
@@ -477,7 +482,10 @@ async function fetchChuoiRows(providerId) {
   const provider = providerById(providerId);
   const payload = await fetchChuoiPayload();
   return payload.matches
-    .filter((match) => chuoiBlvs(match, providerId).some((blv) => Array.isArray(blv.streams) && blv.streams.length))
+    // Keep scheduled matches even before their stream URL is published. The
+    // resolver fetches this API again when the user clicks, so links that are
+    // added close to kick-off become playable without an APK update.
+    .filter((match) => match?._id || match?.externalId)
     .map((match) => {
       const home = match.teams?.home || {};
       const away = match.teams?.away || {};
@@ -494,7 +502,7 @@ async function fetchChuoiRows(providerId) {
         away_logo: away.logo || "",
         kickoff: Date.parse(match.matchTime || "") || Date.now(),
         live: !["ns", "scheduled"].includes(String(match.status || "").toLowerCase()),
-        commentator: `${match.league?.name || "Bóng đá"} · ${blvs.length} BLV`,
+        commentator: `${match.league?.name || "Bóng đá"}${blvs.length ? ` · ${blvs.length} BLV` : " · Chờ BLV"}`,
         _raw: match,
         _referer: payload.referer,
       };
@@ -572,27 +580,131 @@ async function resolveGioVang(key) {
   return collector.result();
 }
 
+function soCoMatchKey(home, away) {
+  return `${stripVietnamese(home)}|${stripVietnamese(away)}`;
+}
+
+function teamLogoKeys(name) {
+  const normalized = stripVietnamese(name).replace(/\b(fc|cf)\b/g, " ").replace(/\s+/g, " ").trim();
+  const withoutPrefix = normalized.replace(/^(clb|dtqg|club|sporting|fk)\s+/, "");
+  return [...new Set([normalized, withoutPrefix].filter(Boolean))];
+}
+
+function soCoRoomTeams(title) {
+  const clean = String(title || "").replace(/^[^:]{1,24}:\s*/, "").trim();
+  const parts = clean.split(/\s+vs\.?\s+/i, 2).map((part) => part.trim());
+  return parts.length === 2 && parts[0] && parts[1] ? parts : null;
+}
+
 async function fetchSoCoRows() {
   const provider = providerById("socolive");
-  const payload = jsonpObject(await fetchText(`${SOCOLIVE_RECOMMEND}?v=${Date.now()}`));
-  const matches = Array.isArray(payload?.data?.matches) ? payload.data.matches : [];
-  return matches
-    .filter((match) => match.categoryName === "Bóng đá" && Array.isArray(match.anchors) && match.anchors.length)
-    .map((match) => ({
+  const settled = await Promise.allSettled([
+    fetchText(`${SOCOLIVE_RECOMMEND}?v=${Date.now()}`),
+    fetchText(`${SOCOLIVE_MATCHES}?v=${Date.now()}`),
+    fetchText(`${SOCOLIVE_ALL_LIVE}?v=${Date.now()}`),
+  ]);
+  const recommended = settled[0].status === "fulfilled" ? jsonpObject(settled[0].value) : {};
+  const recommendedMatches = Array.isArray(recommended?.data?.matches) ? recommended.data.matches : [];
+  const recommendedIds = new Set(recommendedMatches.map((match) => String(match.scheduleId || match.matchId || "")));
+  const fullPayload = settled[1].status === "fulfilled" ? jsonpObject(settled[1].value) : {};
+  const fullMatches = Object.values(fullPayload?.data || {}).filter(Array.isArray).flat();
+  // `match_recommend` only contains a handful of highlighted matches. The
+  // `matches` feed is the actual SoCo football schedule and already carries
+  // anchor room numbers, so it can be resolved to a real stream near kick-off.
+  const matches = [...fullMatches, ...recommendedMatches];
+  const rows = [];
+  const byTeams = new Map();
+  const byIds = new Map();
+
+  for (const match of matches) {
+    if (match.categoryName !== "Bóng đá" || !Array.isArray(match.anchors) || !match.anchors.length) continue;
+    const home = match.hostName || "Đội nhà";
+    const away = match.guestName || "Đội khách";
+    const id = String(match.scheduleId || match.matchId || "");
+    if (!id) continue;
+    const existing = byIds.get(id);
+    if (existing) {
+      const anchors = Array.isArray(existing._raw?.anchors) ? existing._raw.anchors : [];
+      for (const anchor of match.anchors) {
+        const room = String(anchor?.anchor?.roomNum || "");
+        if (room && !anchors.some((item) => String(item?.anchor?.roomNum || "") === room)) anchors.push(anchor);
+      }
+      existing._raw.anchors = anchors;
+      existing.live = existing.live || recommendedIds.has(id);
+      existing.commentator = `${match.subCateName || existing._raw.subCateName || "Bóng đá"} · ${anchors.length} BLV`;
+      continue;
+    }
+    const row = {
       sport: "football",
-      key: String(match.scheduleId || match.matchId),
+      key: id,
       provider: provider.id,
       provider_name: provider.name,
-      name: `${match.hostName || "Đội nhà"} - ${match.guestName || "Đội khách"}`,
-      home_name: match.hostName || "Đội nhà",
-      away_name: match.guestName || "Đội khách",
+      name: `${home} - ${away}`,
+      home_name: home,
+      away_name: away,
       home_logo: match.hostIcon || "",
       away_logo: match.guestIcon || "",
       kickoff: Number(match.matchTime || Date.now()),
-      live: Number(match.status) === 1,
+      // The full schedule uses status=1 for future entries too. Only the
+      // recommend/live-room feeds are treated as currently live.
+      live: recommendedIds.has(id),
       commentator: `${match.subCateName || "Bóng đá"} · ${match.anchors.length} BLV`,
       _raw: match,
-    }));
+    };
+    rows.push(row);
+    byIds.set(id, row);
+    byTeams.set(soCoMatchKey(home, away), row);
+  }
+
+  // The recommend feed is intentionally small. Merge the real football rooms
+  // from all_live_rooms so live matches are not omitted. Rooms with the same
+  // title become extra commentators of one match, never cloned fake matches.
+  if (settled[2].status === "fulfilled") {
+    const livePayload = jsonpObject(settled[2].value);
+    const roomLists = Object.values(livePayload?.data || {}).filter(Array.isArray);
+    const seenRooms = new Set();
+    for (const room of roomLists.flat()) {
+      const roomNum = String(room?.roomNum || "");
+      if (!roomNum || seenRooms.has(roomNum) || Number(room.liveStatus) !== 1 || Number(room.liveTypeParent) !== 1) continue;
+      const teams = soCoRoomTeams(room.title);
+      if (!teams) continue;
+      seenRooms.add(roomNum);
+      const [home, away] = teams;
+      const teamsKey = soCoMatchKey(home, away);
+      let row = byTeams.get(teamsKey);
+      const anchor = {
+        nickName: room.anchor?.nickName || room.detail || "Bình luận viên",
+        anchor: { roomNum },
+      };
+      if (!row) {
+        const match = { anchors: [anchor] };
+        row = {
+          sport: "football",
+          key: `live-${roomNum}`,
+          provider: provider.id,
+          provider_name: provider.name,
+          name: `${home} - ${away}`,
+          home_name: home,
+          away_name: away,
+          home_logo: "",
+          away_logo: "",
+          kickoff: Date.now(),
+          live: true,
+          commentator: "SoCoLive · 1 BLV",
+          _raw: match,
+        };
+        rows.push(row);
+        byTeams.set(teamsKey, row);
+      } else {
+        const anchors = Array.isArray(row._raw?.anchors) ? row._raw.anchors : [];
+        if (!anchors.some((item) => String(item?.anchor?.roomNum || "") === roomNum)) anchors.push(anchor);
+        row._raw.anchors = anchors;
+        row.commentator = `${row._raw.subCateName || "SoCoLive"} · ${anchors.length} BLV`;
+        row.live = true;
+      }
+    }
+  }
+  return rows;
 }
 
 async function resolveSoCo(key) {
@@ -721,6 +833,23 @@ async function providerCatalogs() {
 
 async function sportStreamCatalog(origin) {
   const allRows = await providerCatalogs();
+  const logoIndex = new Map();
+  const teamLogoIndex = new Map();
+  for (const row of allRows) {
+    if (row.home_logo && row.away_logo) {
+      logoIndex.set(soCoMatchKey(row.home_name, row.away_name), [row.home_logo, row.away_logo]);
+      teamLogoKeys(row.home_name).forEach((key) => teamLogoIndex.set(key, row.home_logo));
+      teamLogoKeys(row.away_name).forEach((key) => teamLogoIndex.set(key, row.away_logo));
+    }
+  }
+  for (const row of allRows) {
+    if (!row.home_logo || !row.away_logo) {
+      const logos = logoIndex.get(soCoMatchKey(row.home_name, row.away_name));
+      if (logos) [row.home_logo, row.away_logo] = logos;
+    }
+    if (!row.home_logo) row.home_logo = teamLogoKeys(row.home_name).map((key) => teamLogoIndex.get(key)).find(Boolean) || "";
+    if (!row.away_logo) row.away_logo = teamLogoKeys(row.away_name).map((key) => teamLogoIndex.get(key)).find(Boolean) || "";
+  }
   const grouped = new Map();
   for (const row of allRows) {
     // Chốt an toàn ở tầng cuối: catalog SPORT STREAM không bao giờ nhận
@@ -817,7 +946,7 @@ export default {
       return json({
         ok: true,
         service: "Bình Pro SportsTV Sources",
-        version: 13,
+        version: 15,
         source_count: Object.values(SOURCES).filter((item) => item.enabled).length,
       });
     }
