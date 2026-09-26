@@ -44,7 +44,7 @@ URL cố định:
 Không đổi URL này vì SportsTV và các APK cũ đang sử dụng. Bản triển khai hoàn tất:
 
 - Worker health version: `5`
-- Deployment version ID: `66c6e450-4cc3-46e9-b388-2acad33f9383`
+- Deployment version ID: `a43882d4-7425-4154-86c3-60f69acdcc44`
 - Nguồn local: `C:\SportTV\work\sportstv-playlists-worker\worker.js`
 - Bản sao GitHub: `cloudflare-worker/worker.js`
 
