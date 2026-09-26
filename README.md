@@ -14,10 +14,10 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 
 ## Bản đang phát hành
 
-- Version code: `534`
-- Version name: `5.2.3-BinhPro.12-GETOUT-RealServers`
-- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_v534_GETOUT_RealServers_AllInOne.apk`
-- SHA-256 SportsTV: `57E1980F8A790EF3D403B5AE326B6F484B47BE17F2F5940DAB297AD95AB82FEB`
+- Version code: `535`
+- Version name: `5.2.3-BinhPro.13-FullSchedule`
+- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk`
+- SHA-256 SportsTV: `91BE86BCF0D7724C956B44AAB3920547DCC628683D7680D5794947A654AD0C9E`
 - Package duy nhất: `com.sports.tv`
 - Nội dung: SPORT STREAM TV 2.6 và GETOUT đều chạy trực tiếp bên trong SportsTV. Không cài app riêng, không xin quyền cài ứng dụng không rõ nguồn gốc và không có kích hoạt thứ hai. Giữ nguyên Film Activation, Cloudflare Worker, VietAnhTV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
 
@@ -41,9 +41,9 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 - Truyền Hình TV, Thanh TV và VietAnhTV nay mở đúng nguồn tương ứng.
 - Đã phát thử từng nguồn trên Box R 4K Plus: có hình, có tiếng và không crash.
 
-## SPORT STREAM server thật v534 / Worker football-only v7
+## SPORT STREAM server thật v535 / Worker football-only v13
 
-- Worker catalog version 7 lấy dữ liệu riêng theo từng hệ thống của GETOUT, không
+- Worker catalog version 13 lấy dữ liệu riêng theo từng hệ thống của GETOUT, không
   còn nhân một danh sách thành nhiều tên server.
 - Catalog chỉ nhận bóng đá. Đã loại bóng rổ, eSports, bóng chuyền, võ thuật và bỏ
   hoàn toàn dữ liệu M3U Truyền Hình/Thanh TV khỏi màn SPORT STREAM.
@@ -54,6 +54,11 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
   trong thư mục `provider-icons`.
 - SPORT STREAM TV, SPORT STREAM Mobile và bản tích hợp trong SportsTV đều nhận
   provider mới từ Worker, không bị whitelist tên server cũ.
+- Toàn bộ lịch upstream được giữ lại, không còn giới hạn tạm 3 trận mỗi nguồn.
+  Cờ/logo hai đội được tải nền; không quét bitmap trên UI thread nên danh sách dài
+  không làm ứng dụng treo ở màn hình mở.
+- Thứ tự hiển thị từ xa: Xôi Lạc, Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive và
+  Bông Lau ở cuối. Provider đang lỗi hoặc không có dữ liệu vẫn tự ẩn.
 - Mã nguồn Worker bàn giao tại `cloudflare-worker`; URL Worker cũ được giữ nguyên
   để mọi APK đang dùng không bị gián đoạn.
 

@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 534,
-  "version_name": "5.2.3-BinhPro.12-GETOUT-RealServers",
-  "title": "SportsTV Bình Pro — Server bóng đá thật",
-  "message": "SPORT STREAM đã thay danh sách server mô phỏng bằng nguồn thật theo GETOUT. Bổ sung Bông Lau, SoCoLive và Khán Đài; server lỗi hoặc không có trận sẽ tự ẩn. Có logo Khán Đài và SoCoLive mới, chọn trận sẽ lấy link phát mới và vẫn giữ GETOUT tích hợp trực tiếp.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v534_GETOUT_RealServers_AllInOne.apk",
+  "version_code": 535,
+  "version_name": "5.2.3-BinhPro.13-FullSchedule",
+  "title": "SportsTV Bình Pro — Lịch bóng đá đầy đủ",
+  "message": "SPORT STREAM đã trả lại toàn bộ lịch từ các nguồn thật, hiện đúng cờ/logo hai đội và tải logo nền để tránh treo khi có nhiều trận. Thứ tự ưu tiên: Xôi Lạc, Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive và Bông Lau.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk",
   "required": false
 }

@@ -27,15 +27,11 @@ const XOILAC_REFERER = XOILAC_REFERERS[0];
 // Danh sách nguồn thật lấy theo kiến trúc provider của GETOUT. Provider lỗi/rỗng
 // sẽ không xuất hiện trong catalog; khi domain hoạt động lại nó tự hiện trở lại.
 const SPORT_STREAM_PROVIDERS = [
-  { id: "chuoichien", name: "Chuối Chiên" },
-  {
-    id: "bonglau",
-    name: "Bông Lau",
-    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/bonglau-logo.png",
-  },
-  { id: "colatv", name: "COLA TV" },
-  { id: "gavang33", name: "Gà Vàng 33" },
+  { id: "xoilacxth", name: "Xôi Lạc" },
   { id: "giovang", name: "Giờ Vàng" },
+  { id: "colatv", name: "COLA TV" },
+  { id: "chuoichien", name: "Chuối Chiên" },
+  { id: "gavang33", name: "Gà Vàng 33" },
   {
     id: "socolive",
     name: "SoCoLive",
@@ -48,10 +44,17 @@ const SPORT_STREAM_PROVIDERS = [
   },
   { id: "phalang", name: "Phá Làng TV" },
   { id: "xoiche", name: "Xôi Chè" },
-  { id: "xoilacxth", name: "Xôi Lạc" },
+  {
+    id: "bonglau",
+    name: "Bông Lau",
+    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/bonglau-logo.png",
+  },
 ];
 
-const SPORT_STREAM_VISIBLE_MATCH_LIMIT = 18;
+// Keep the complete upstream schedule. The TV client now decodes team logos on
+// a background worker, so the earlier temporary three-match safety cap is no
+// longer necessary.
+const SPORT_STREAM_VISIBLE_MATCH_LIMIT = 100;
 
 const JSON_HEADERS = {
   "content-type": "application/json; charset=utf-8",
@@ -732,7 +735,8 @@ async function sportStreamCatalog(origin) {
   const activeProviders = SPORT_STREAM_PROVIDERS.filter((provider) => grouped.get(provider.id)?.length);
   const matches = [];
   for (const provider of activeProviders) {
-    for (const row of sortRows(grouped.get(provider.id)).slice(0, SPORT_STREAM_VISIBLE_MATCH_LIMIT)) {
+    const visibleRows = sortRows(grouped.get(provider.id)).slice(0, SPORT_STREAM_VISIBLE_MATCH_LIMIT);
+    for (const row of visibleRows) {
       matches.push({
         id: `${provider.id}-${row.key}`,
         provider: row.provider,
@@ -813,7 +817,7 @@ export default {
       return json({
         ok: true,
         service: "Bình Pro SportsTV Sources",
-        version: 7,
+        version: 13,
         source_count: Object.values(SOURCES).filter((item) => item.enabled).length,
       });
     }

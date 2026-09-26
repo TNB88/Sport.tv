@@ -30,7 +30,7 @@ Domain Xôi Lạc được quản lý từ xa tại:
 không cần build lại APK. Worker đọc lại cấu hình sau tối đa khoảng 5 phút. Danh sách
 domain tích hợp sẵn trong `worker.js` luôn được giữ làm dự phòng nếu GitHub lỗi.
 
-## Bố cục nhà cung cấp TV (catalog version 7)
+## Bố cục nhà cung cấp TV (catalog version 13)
 
 Worker lấy dữ liệu riêng theo kiến trúc thật của GETOUT, không nhân một danh sách
 thành nhiều server giả. Các nguồn đang hoạt động gồm Chuối Chiên, Bông Lau,
@@ -51,3 +51,7 @@ Logo provider được lưu ở GitHub:
 
 Không đổi các ID hiện có. Nếu thêm server mới, thêm provider vào Worker, tạo hàng
 catalog/resolver tương ứng và để icon bằng URL HTTPS ổn định.
+
+Worker không cắt bớt lịch. `SPORT_STREAM_VISIBLE_MATCH_LIMIT = 100` chỉ là chốt
+an toàn cho từng provider, lớn hơn lượng lịch thực tế. Thứ tự hiện tại: Xôi Lạc,
+Giờ Vàng, COLA TV, Chuối Chiên, các nguồn còn hoạt động và Bông Lau ở cuối.

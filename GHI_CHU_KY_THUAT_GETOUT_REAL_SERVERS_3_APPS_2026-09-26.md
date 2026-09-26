@@ -5,13 +5,13 @@ Người quản lý: Bình Pro
 
 ## 1. Bộ APK bàn giao
 
-### SportsTV tích hợp tất cả
+### SportsTV tích hợp tất cả — bản mới nhất
 
-- Tệp: `SportsTV_5.2.3_BinhPro_v534_GETOUT_RealServers_AllInOne.apk`
+- Tệp: `SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk`
 - Package: `com.sports.tv`
-- Version code: `534`
-- Version name: `5.2.3-BinhPro.12-GETOUT-RealServers`
-- SHA-256: `57E1980F8A790EF3D403B5AE326B6F484B47BE17F2F5940DAB297AD95AB82FEB`
+- Version code: `535`
+- Version name: `5.2.3-BinhPro.13-FullSchedule`
+- SHA-256: `91BE86BCF0D7724C956B44AAB3920547DCC628683D7680D5794947A654AD0C9E`
 - Chứng thư ký SHA-256: `B86FA822BA42414127635B5D830CF98855043B892A1480AA2EC446C599C847EA`
 
 ### SPORT STREAM TV độc lập
@@ -20,7 +20,7 @@ Người quản lý: Bình Pro
 - Package: `com.vxm.sport.mobile`
 - Version code: `15`
 - Version name: `2.6-BinhPro-Adaptive1080-BLV-TV-Activation`
-- SHA-256: `5A7E0E0247A6866DC03E6D419D9FE0081674825791AA0BB1CD34919203AC4869`
+- SHA-256: `8046B8A6DD1D2E7388CF6A87705A57A6772DBCF613430DB10E96B56369CCB7AC`
 - Chứng thư ký SHA-256: `4044294B7A4EC4A1E88A6EF082EADD7CCD344F9509CE49D4BFF65F00E656216A`
 
 ### SPORT STREAM Mobile độc lập
@@ -29,7 +29,7 @@ Người quản lý: Bình Pro
 - Package: `com.vxm.sport.mobile`
 - Version code: `14`
 - Version name: `2.6-BinhPro-Adaptive1080-BLV-Mobile`
-- SHA-256: `7A958155660FE1E71D80C939F336A56A325269C0DDA68515BD133157D335A54F`
+- SHA-256: `591A2E979B82DBC9E029852C1F0A421935EF1FA9B3E4EF2DD47882F6E3B01421`
 - Chứng thư ký SHA-256: `4044294B7A4EC4A1E88A6EF082EADD7CCD344F9509CE49D4BFF65F00E656216A`
 
 Hai APK SPORT STREAM TV và Mobile cùng package, vì vậy chỉ cài một bản phù hợp
@@ -43,8 +43,8 @@ URL cố định:
 
 Không đổi URL này vì SportsTV và các APK cũ đang sử dụng. Bản triển khai hoàn tất:
 
-- Worker health version: `7`
-- Deployment version ID: `c262da0e-9901-4b2e-8ceb-1525ebc92519`
+- Worker health version: `13`
+- Deployment version ID: `4c80d9ae-5546-4c8a-b25a-7603dbc6e47e`
 - Nguồn local: `C:\SportTV\work\sportstv-playlists-worker\worker.js`
 - Bản sao GitHub: `cloudflare-worker/worker.js`
 
@@ -91,9 +91,14 @@ adapter API GETOUT riêng trả đúng trận bóng đá. Provider lỗi/rỗng 
   và đội khách. APK đã có tag kiểm tra ảnh tải bất đồng bộ nên không gắn ảnh trễ
   vào nhầm ô.
 
-Tại thời điểm kiểm thử Worker trả 6 provider có dữ liệu thật và 79 trận bóng đá:
+Tại thời điểm kiểm thử Worker trả 6 provider có dữ liệu thật; số trận thay đổi theo
+upstream (lần kiểm tra Worker v13 trả 148 trận bóng đá):
 Chuối Chiên, Bông Lau, COLA TV, Giờ Vàng, SoCoLive và Xôi Lạc. Resolver mẫu của
 cả 6 provider đều trả nguồn. Gà Vàng 33 tự ẩn vì API thật đang không có trận.
+
+Worker không còn giới hạn tạm 3 trận mỗi provider. Thứ tự từ xa là: Xôi Lạc,
+Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive, rồi Bông Lau cuối cùng. Provider lỗi
+hoặc rỗng vẫn tự ẩn nên thứ tự thực tế chỉ gồm các nguồn đang hoạt động.
 
 ## 4. Logo nhà cung cấp
 
@@ -132,6 +137,27 @@ Tìm chú thích:
 Không vá nhầm các lệnh `Set.contains` khác. Chỉ hai vị trí nằm trong luồng dựng
 nhóm provider của hàm catalog.
 
+### Bản vá ANR khi trả toàn bộ lịch và logo đội
+
+Nguyên nhân treo/out không phải do Worker mất trận. `MainActivity.r(...)` đọc file
+logo đã cache bằng `BitmapFactory.decodeFile` ngay trên UI thread; sau đó
+`MainActivity.J(Bitmap)` còn quét từng pixel để cắt nền. Khi gần 80 thẻ trở lên,
+box 32-bit có thể báo ANR trong lúc dựng danh sách.
+
+Bản v535 và hai APK độc lập mới xử lý như sau:
+
+- File cache cũng được chuyển qua executor tải ảnh nền có sẵn trong app.
+- `J(Bitmap)` trả lại bitmap đã chuẩn bị, không quét toàn bộ pixel trên UI thread.
+- Vẫn giữ tag URL trên `ImageView`, tránh ảnh tải trễ gắn nhầm trận.
+- Worker trả toàn bộ lịch thật và đủ `home_logo`/`away_logo`; không thay bằng icon
+  quả bóng chung.
+
+Các file đã vá:
+
+- TV độc lập: `sportstream_tv26_activation_20260925/smali/com/vxm/sport/mobile/MainActivity.smali`
+- Mobile: `sportstream_26_adaptive1080_20260925/mobile/smali/com/vxm/sport/mobile/MainActivity.smali`
+- SportsTV nhúng: `sportstv_v532_getout_allinone_20260925/decoded/smali_classes4/com/vxm/sport/mobile/MainActivity.smali`
+
 ## 6. Film Activation
 
 Lần sửa này không thay URL Apps Script, app ID, session hoặc logic kích hoạt. Thư
@@ -150,12 +176,12 @@ Kho:
 
 `https://github.com/TNB88/Sport.tv`
 
-`update.json` của bản 534:
+`update.json` của bản 535:
 
 - `enabled`: `true`
-- `version_code`: `534`
-- `version_name`: `5.2.3-BinhPro.12-GETOUT-RealServers`
-- `apk_url`: URL raw tới APK v534
+- `version_code`: `535`
+- `version_name`: `5.2.3-BinhPro.13-FullSchedule`
+- `apk_url`: URL raw tới APK `SportsTV_5.2.3_BinhPro_v535_FullSchedule_AsyncLogos.apk`
 - `required`: `false`
 
 Lần sau phát hành phải tăng `version_code`; chỉ đổi tên tệp APK mà không tăng mã
@@ -175,8 +201,10 @@ Xôi Lạc đọc domain theo thứ tự trong:
 
 ## 9. Kiểm thử đã thực hiện
 
-- Worker `/health`: version 7.
-- Catalog: 6 provider có dữ liệu thật, 79 trận và không có dòng M3U phụ.
+- Worker `/health`: version 13.
+- Catalog: 6 provider có dữ liệu thật, 148 trận tại thời điểm kiểm tra; số lượng
+  thay đổi theo upstream và không còn bị cắt xuống 3 trận mỗi nguồn.
+- Cả 148 thẻ kiểm tra đều có `home_logo` và `away_logo`; thứ tự provider đúng yêu cầu.
 - Kiểm tra `bad_count=0`: không còn bóng rổ, eSports, bóng chuyền, võ thuật hoặc
   thẻ BLV lấy từ playlist truyền hình.
 - Gọi resolver mẫu của cả 6 provider: đều có nguồn.
@@ -197,7 +225,7 @@ Nguyên nhân không nằm ở URL HLS: CDN còn hoạt động nhưng trả HTT
 dùng Referer của trang danh sách thay cho Referer riêng của máy phát. Hai provider
 cũng yêu cầu User-Agent desktop giống GETOUT.
 
-Worker version 7 xử lý như sau:
+Worker version 13 tiếp tục giữ bản sửa phát từ version 7 như sau:
 
 - Chuối Chiên đọc `liveStreamUrl` từ trang chủ đang hoạt động và dùng giá trị này
   làm `Referer` khi phát.
@@ -210,7 +238,7 @@ Worker version 7 xử lý như sau:
 
 Đã kiểm tra trực tiếp cả hai provider: resolver trả 2 nguồn HD/FHD, manifest FHD
 HTTP `200`, tải thử 4096 byte của segment video HTTP `206`. Version triển khai
-Cloudflare: `c262da0e-9901-4b2e-8ceb-1525ebc92519`.
+Cloudflare mới nhất: `4c80d9ae-5546-4c8a-b25a-7603dbc6e47e`.
 
 ## 10. Quy trình build lại ngắn gọn
 
