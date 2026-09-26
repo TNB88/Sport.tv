@@ -224,11 +224,17 @@ Xôi Lạc đọc domain theo thứ tự trong:
   thẻ BLV lấy từ playlist truyền hình.
 - Gọi resolver mẫu của cả 6 provider: đều có nguồn.
 - Cài đè SportsTV v536 trên Samsung Fold qua ADB: thành công, giữ dữ liệu.
+- Cài đè SPORT STREAM TV code 15 và SportsTV v536 trên Box R 4K Plus
+  (`192.168.1.22`): thành công, giữ dữ liệu/kích hoạt.
 - SportsTV mở danh sách chính và mục SPORT STREAM nhúng không crash.
 - Catalog SPORT STREAM hiển thị nhóm provider động; logcat không có
   `FATAL EXCEPTION` của app trong ca kiểm thử.
 - Chọn một trận SoCoLive bằng remote mở đúng bảng **Chọn bình luận viên**, hiển
   thị các nguồn CACAO, BLV PEWPEW, A PÁO với HLS/FLV riêng.
+- Trên Box R 4K Plus, cuộn tới cuối xác nhận thứ tự **Chuối Chiên → SoCoLive →
+  Bông Lau**; Bông Lau nằm cuối. Chọn trận SoCoLive mở 4 nguồn HLS HD/HLS/FLV
+  HD/FLV; HLS HD phát hình thật, Media3 báo bộ giải mã AVC `1280x720`, không có
+  `FATAL EXCEPTION`, ANR hoặc `OutOfMemory`.
 - Ba APK: zipalign đạt; chữ ký v1/v2/v3 đạt.
 
 Việc phát hình còn phụ thuộc trận đang live và upstream tại thời điểm bấm. Resolver
