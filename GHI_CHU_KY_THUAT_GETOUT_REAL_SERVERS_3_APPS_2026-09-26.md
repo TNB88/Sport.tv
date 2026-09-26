@@ -44,7 +44,7 @@ URL cố định:
 Không đổi URL này vì SportsTV và các APK cũ đang sử dụng. Bản triển khai hoàn tất:
 
 - Worker health version: `5`
-- Deployment version ID: `b8925a9c-b0b4-4986-9836-f17b628d88bc`
+- Deployment version ID: `66c6e450-4cc3-46e9-b388-2acad33f9383`
 - Nguồn local: `C:\SportTV\work\sportstv-playlists-worker\worker.js`
 - Bản sao GitHub: `cloudflare-worker/worker.js`
 
@@ -182,4 +182,3 @@ Việc phát hình còn phụ thuộc trận đang live và upstream tại thờ
 6. Kiểm tra `aapt dump badging`, `zipalign -c` và `apksigner verify --print-certs`.
 7. Cài đè bằng ADB và test catalog, chọn nguồn, Back, tắt/mở lại app.
 8. Cập nhật APK + `update.json` trên GitHub, sau đó kiểm tra URL raw trả HTTP 200.
-
