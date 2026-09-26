@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 533,
-  "version_name": "5.2.3-BinhPro.11-AllInOne-GetOut-SourceFix",
-  "title": "SportsTV Bình Pro — Sửa lỗi nguồn TV",
-  "message": "Đã sửa lỗi sau khi thêm GETOUT làm Truyền Hình TV, Thanh TV và VietAnhTV mở nhầm nguồn, màn hình đen hoặc thoát ứng dụng. Ba nguồn nay mở đúng vị trí và đã phát thử có hình, có tiếng. Bản mới vẫn tích hợp trực tiếp SPORT STREAM và GETOUT trong cùng một APK.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_SportStream_GetOut_AllInOne_v533_SourceFix.apk",
+  "version_code": 534,
+  "version_name": "5.2.3-BinhPro.12-GETOUT-RealServers",
+  "title": "SportsTV Bình Pro — Server bóng đá thật",
+  "message": "SPORT STREAM đã thay danh sách server mô phỏng bằng nguồn thật theo GETOUT. Bổ sung Bông Lau, SoCoLive và Khán Đài; server lỗi hoặc không có trận sẽ tự ẩn. Có logo Khán Đài và SoCoLive mới, chọn trận sẽ lấy link phát mới và vẫn giữ GETOUT tích hợp trực tiếp.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v534_GETOUT_RealServers_AllInOne.apk",
   "required": false
 }
