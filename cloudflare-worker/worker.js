@@ -331,6 +331,7 @@ function normalizeGvRows(providerId, entries, referer) {
         ? match.anchorAppointmentVoList.length
         : 0;
       return {
+        sport: "football",
         key: String(key),
         provider: provider.id,
         provider_name: provider.name,
@@ -435,6 +436,7 @@ async function fetchChuoiRows(providerId) {
       const away = match.teams?.away || {};
       const blvs = chuoiBlvs(match, providerId);
       return {
+        sport: "football",
         key: String(match._id || match.externalId),
         provider: provider.id,
         provider_name: provider.name,
@@ -481,12 +483,16 @@ async function fetchGioVangRows() {
   const seen = new Set();
   const rows = [];
   for (const match of all) {
+    // API Giờ Vàng dùng chung cho nhiều môn. SPORT STREAM chỉ được nhận
+    // bóng đá giống GETOUT, tuyệt đối không trộn bóng rổ/eSports/bóng chuyền.
+    if (stripVietnamese(String(match.type || "")) !== "football") continue;
     const id = String(match.id || match.fi || "");
     if (!id || seen.has(id) || /kết thúc/i.test(String(match.status || ""))) continue;
     seen.add(id);
     const home = match.teams?.home || {};
     const away = match.teams?.away || {};
     rows.push({
+      sport: "football",
       key: id,
       provider: provider.id,
       provider_name: provider.name,
@@ -526,6 +532,7 @@ async function fetchSoCoRows() {
   return matches
     .filter((match) => match.categoryName === "Bóng đá" && Array.isArray(match.anchors) && match.anchors.length)
     .map((match) => ({
+      sport: "football",
       key: String(match.scheduleId || match.matchId),
       provider: provider.id,
       provider_name: provider.name,
@@ -591,6 +598,7 @@ async function fetchGaVangRows() {
     body,
   });
   return (Array.isArray(payload?.data) ? payload.data : []).map((match) => ({
+    sport: "football",
     key: String(match.id || ""),
     provider: provider.id,
     provider_name: provider.name,
@@ -659,7 +667,6 @@ async function providerCatalogs() {
     fetchGioVangRows(),
     fetchSoCoRows(),
     fetchGvRows("xoilacxth"),
-    fetchM3uRows(),
   ];
   const settled = await Promise.allSettled(jobs);
   return settled.flatMap((item) => item.status === "fulfilled" ? item.value : []);
@@ -669,7 +676,9 @@ async function sportStreamCatalog(origin) {
   const allRows = await providerCatalogs();
   const grouped = new Map();
   for (const row of allRows) {
-    if (!row.provider || !row.key) continue;
+    // Chốt an toàn ở tầng cuối: catalog SPORT STREAM không bao giờ nhận
+    // dữ liệu playlist truyền hình hoặc môn thể thao khác.
+    if (row.sport !== "football" || !row.provider || !row.key) continue;
     if (!grouped.has(row.provider)) grouped.set(row.provider, []);
     const rows = grouped.get(row.provider);
     const duplicate = rows.some((old) => old.name === row.name && Math.abs(Number(old.kickoff) - Number(row.kickoff)) < 60000);
@@ -687,8 +696,12 @@ async function sportStreamCatalog(origin) {
         name: row.name,
         home_name: row.home_name,
         away_name: row.away_name,
-        home_logo: row.home_logo,
-        away_logo: row.away_logo,
+        home_logo: typeof row.home_logo === "string" && /^https:\/\//i.test(row.home_logo.trim())
+          ? row.home_logo.trim()
+          : "",
+        away_logo: typeof row.away_logo === "string" && /^https:\/\//i.test(row.away_logo.trim())
+          ? row.away_logo.trim()
+          : "",
         kickoff: row.kickoff,
         live: row.live,
         commentator: row.commentator,
@@ -756,7 +769,7 @@ export default {
       return json({
         ok: true,
         service: "Bình Pro SportsTV Sources",
-        version: 5,
+        version: 6,
         source_count: Object.values(SOURCES).filter((item) => item.enabled).length,
       });
     }

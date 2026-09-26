@@ -43,8 +43,8 @@ URL cố định:
 
 Không đổi URL này vì SportsTV và các APK cũ đang sử dụng. Bản triển khai hoàn tất:
 
-- Worker health version: `5`
-- Deployment version ID: `a43882d4-7425-4154-86c3-60f69acdcc44`
+- Worker health version: `6`
+- Deployment version ID: `757f2a54-ed57-4c2d-b722-0457b6ba1216`
 - Nguồn local: `C:\SportTV\work\sportstv-playlists-worker\worker.js`
 - Bản sao GitHub: `cloudflare-worker/worker.js`
 
@@ -72,15 +72,28 @@ nguồn lấy lịch và resolver riêng:
 | Gà Vàng 33 | `gavang33` | Đọc API base từ cấu hình GETOUT rồi resolve trận |
 | Giờ Vàng | `giovang` | API lịch + API chi tiết trận Giờ Vàng |
 | SoCoLive | `socolive` | Lịch JSON/JSONP và room detail riêng |
-| Khán Đài | `khandai` | Nhóm kênh thật trong M3U |
 | Xôi Lạc | `xoilacxth` | API lịch bóng đá + referer quản lý từ xa |
 
-`Phá Làng TV` và `Xôi Chè` vẫn có ID dự phòng trong Worker nhưng không hiện khi
-không có dữ liệu thật. Quy tắc chung: provider lỗi/rỗng tự ẩn, khi upstream hoạt
-động lại sẽ tự xuất hiện.
+`Khán Đài`, `Phá Làng TV` và `Xôi Chè` vẫn có ID/ảnh dự phòng nhưng không được
+lấy từ playlist Truyền Hình hoặc Thanh TV nữa. Chúng chỉ được hiện lại khi có
+adapter API GETOUT riêng trả đúng trận bóng đá. Provider lỗi/rỗng tự ẩn.
 
-Tại thời điểm kiểm thử Worker trả 8 provider, khoảng 110–112 trận. Resolver của cả
-8 provider đều trả ít nhất một nguồn; SoCoLive trả nhiều BLV/stream nhất tùy trận.
+### Khóa football-only ở Worker version 6
+
+- Bỏ hoàn toàn `fetchM3uRows()` khỏi luồng dựng catalog SPORT STREAM. Ba playlist
+  Truyền Hình, Thanh TV và VietAnhTV vẫn hoạt động ở màn hình riêng, không còn
+  bị trộn thành trận/BLV của GETOUT.
+- Giờ Vàng bắt buộc `match.type == football`; loại `basketball`, `esport`,
+  `bongchuyen`, `bongchay` và `vothuat`.
+- Mỗi adapter API gắn `sport: football`; tầng dựng catalog kiểm tra lần cuối và
+  bỏ mọi dòng không phải bóng đá.
+- `home_logo` và `away_logo` chỉ nhận URL HTTPS hợp lệ, giữ đúng thứ tự đội nhà
+  và đội khách. APK đã có tag kiểm tra ảnh tải bất đồng bộ nên không gắn ảnh trễ
+  vào nhầm ô.
+
+Tại thời điểm kiểm thử Worker trả 6 provider có dữ liệu thật và 79 trận bóng đá:
+Chuối Chiên, Bông Lau, COLA TV, Giờ Vàng, SoCoLive và Xôi Lạc. Resolver mẫu của
+cả 6 provider đều trả nguồn. Gà Vàng 33 tự ẩn vì API thật đang không có trận.
 
 ## 4. Logo nhà cung cấp
 
@@ -162,9 +175,11 @@ Xôi Lạc đọc domain theo thứ tự trong:
 
 ## 9. Kiểm thử đã thực hiện
 
-- Worker `/health`: version 5.
-- Catalog: 8 provider hoạt động.
-- Gọi resolver mẫu của cả 8 provider: đều có nguồn.
+- Worker `/health`: version 6.
+- Catalog: 6 provider có dữ liệu thật, 79 trận và không có dòng M3U phụ.
+- Kiểm tra `bad_count=0`: không còn bóng rổ, eSports, bóng chuyền, võ thuật hoặc
+  thẻ BLV lấy từ playlist truyền hình.
+- Gọi resolver mẫu của cả 6 provider: đều có nguồn.
 - Cài đè SportsTV v534 trên Box R 4K Plus qua ADB: thành công, giữ dữ liệu.
 - SportsTV mở danh sách chính và mục SPORT STREAM nhúng không crash.
 - Catalog SPORT STREAM hiển thị nhóm provider động; logcat không có

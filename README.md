@@ -41,12 +41,14 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 - Truyền Hình TV, Thanh TV và VietAnhTV nay mở đúng nguồn tương ứng.
 - Đã phát thử từng nguồn trên Box R 4K Plus: có hình, có tiếng và không crash.
 
-## SPORT STREAM server thật v534
+## SPORT STREAM server thật v534 / Worker football-only v6
 
-- Worker catalog version 5 lấy dữ liệu riêng theo từng hệ thống của GETOUT, không
+- Worker catalog version 6 lấy dữ liệu riêng theo từng hệ thống của GETOUT, không
   còn nhân một danh sách thành nhiều tên server.
-- Đang hỗ trợ: Chuối Chiên, Bông Lau, COLA TV, Gà Vàng 33, Giờ Vàng, SoCoLive,
-  Khán Đài và Xôi Lạc.
+- Catalog chỉ nhận bóng đá. Đã loại bóng rổ, eSports, bóng chuyền, võ thuật và bỏ
+  hoàn toàn dữ liệu M3U Truyền Hình/Thanh TV khỏi màn SPORT STREAM.
+- Đang có dữ liệu thật: Chuối Chiên, Bông Lau, COLA TV, Giờ Vàng, SoCoLive và
+  Xôi Lạc. Gà Vàng 33 chỉ hiện khi API thật có trận.
 - Server hỏng hoặc không có dữ liệu tự ẩn; khi upstream hoạt động lại sẽ tự hiện.
 - Bổ sung logo Khán Đài, SoCoLive nền trong suốt, Bông Lau và logo bóng đá chung
   trong thư mục `provider-icons`.
