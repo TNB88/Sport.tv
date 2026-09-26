@@ -31,7 +31,7 @@ const SPORT_STREAM_PROVIDERS = [
   {
     id: "bonglau",
     name: "Bông Lau",
-    icon: "https://ui-avatars.com/api/?name=BL&size=256&background=3F0D12&color=FFD166&bold=true&format=png",
+    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/bonglau-logo.png",
   },
   { id: "colatv", name: "COLA TV" },
   { id: "gavang33", name: "Gà Vàng 33" },
@@ -39,7 +39,7 @@ const SPORT_STREAM_PROVIDERS = [
   {
     id: "socolive",
     name: "SoCoLive",
-    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/socolive-logo.jpg",
+    icon: "https://raw.githubusercontent.com/TNB88/Sport.tv/main/provider-icons/socolive-logo-transparent.png",
   },
   {
     id: "khandai",

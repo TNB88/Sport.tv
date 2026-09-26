@@ -48,7 +48,8 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 - Đang hỗ trợ: Chuối Chiên, Bông Lau, COLA TV, Gà Vàng 33, Giờ Vàng, SoCoLive,
   Khán Đài và Xôi Lạc.
 - Server hỏng hoặc không có dữ liệu tự ẩn; khi upstream hoạt động lại sẽ tự hiện.
-- Bổ sung logo thật Khán Đài và SoCoLive trong thư mục `provider-icons`.
+- Bổ sung logo Khán Đài, SoCoLive nền trong suốt, Bông Lau và logo bóng đá chung
+  trong thư mục `provider-icons`.
 - SPORT STREAM TV, SPORT STREAM Mobile và bản tích hợp trong SportsTV đều nhận
   provider mới từ Worker, không bị whitelist tên server cũ.
 - Mã nguồn Worker bàn giao tại `cloudflare-worker`; URL Worker cũ được giữ nguyên

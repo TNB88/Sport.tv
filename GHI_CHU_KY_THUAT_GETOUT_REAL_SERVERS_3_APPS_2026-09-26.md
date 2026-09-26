@@ -84,13 +84,15 @@ Tại thời điểm kiểm thử Worker trả 8 provider, khoảng 110–112 tr
 
 ## 4. Logo nhà cung cấp
 
-Hai logo do Bình Pro cung cấp đã thay icon chữ tạm:
+Logo provider mới:
 
 - `provider-icons/khandai-logo.webp`
-- `provider-icons/socolive-logo.jpg`
+- `provider-icons/socolive-logo-transparent.png` (tách nền alpha từ ảnh gốc)
+- `provider-icons/bonglau-logo.png` (Bông Lau + bóng đá)
+- `provider-icons/football-logo.png` (logo bóng đá chung, chưa gán provider)
 
 Worker trả URL raw GitHub trong trường `providers[].icon`. APK tự tải logo HTTPS.
-Không đổi tên/xóa hai tệp này nếu chưa cập nhật URL trong Worker.
+Không đổi tên/xóa tệp đang dùng nếu chưa cập nhật URL trong Worker.
 
 ## 5. Bản vá APK để nhận provider mới
 
@@ -167,6 +169,8 @@ Xôi Lạc đọc domain theo thứ tự trong:
 - SportsTV mở danh sách chính và mục SPORT STREAM nhúng không crash.
 - Catalog SPORT STREAM hiển thị nhóm provider động; logcat không có
   `FATAL EXCEPTION` của app trong ca kiểm thử.
+- Chọn một trận SoCoLive bằng remote mở đúng bảng **Chọn bình luận viên**, hiển
+  thị các nguồn CACAO, BLV PEWPEW, A PÁO với HLS/FLV riêng.
 - Ba APK: zipalign đạt; chữ ký v1/v2/v3 đạt.
 
 Việc phát hình còn phụ thuộc trận đang live và upstream tại thời điểm bấm. Resolver

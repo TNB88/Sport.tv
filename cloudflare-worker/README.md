@@ -42,10 +42,12 @@ Provider lỗi hoặc rỗng tự ẩn khỏi giao diện; khi upstream hoạt �
 không cần sửa APK. Bản APK từ ngày 2026-09-26 đã bỏ whitelist cố định nên nhận
 được provider mới từ Worker.
 
-Hai logo thật do Bình Pro cung cấp được lưu ở GitHub:
+Logo provider được lưu ở GitHub:
 
 - `provider-icons/khandai-logo.webp`
-- `provider-icons/socolive-logo.jpg`
+- `provider-icons/socolive-logo-transparent.png` (đã tách nền alpha)
+- `provider-icons/bonglau-logo.png`
+- `provider-icons/football-logo.png` (logo bóng đá chung, dự phòng)
 
 Không đổi các ID hiện có. Nếu thêm server mới, thêm provider vào Worker, tạo hàng
 catalog/resolver tương ứng và để icon bằng URL HTTPS ổn định.
