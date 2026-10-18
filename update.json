@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 536,
-  "version_name": "5.2.3-BinhPro.14-ProviderOrder",
-  "title": "SportsTV Bình Pro — Nguồn bóng đá tối ưu",
-  "message": "Sắp đúng thứ tự Xôi Lạc, Giờ Vàng, COLA TV, Chuối Chiên, SoCoLive và Bông Lau cuối. Logo Bông Lau/SoCoLive nền trong suốt; Chuối Chiên và Bông Lau hiện đủ 17 lịch, SoCoLive mở rộng lên khoảng 85 lịch bóng đá có phòng BLV thật.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v536_ProviderOrder_TransparentLogos.apk",
+  "version_code": 540,
+  "version_name": "5.2.3-BinhPro.18-GETOUT-VIP-NoExtraSources-NoUpdate",
+  "title": "SportsTV Bình Pro — Cập nhật GetOut V.I.P",
+  "message": "Cập nhật GetOut V.I.P mới nhất chạy trực tiếp trong SportsTV; tắt thông báo và tự cập nhật riêng của GetOut. Dọn các nguồn cũ THE THAO, TIVI, HIGHLIGHT, KK PHIM và MAM PHIM để danh sách gọn, ổn định hơn.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v540_GETOUT_VIP_Clean.apk",
   "required": false
 }

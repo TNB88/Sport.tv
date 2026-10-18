@@ -14,16 +14,16 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 
 ## Bản đang phát hành
 
-- Version code: `536`
-- Version name: `5.2.3-BinhPro.14-ProviderOrder`
-- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_v536_ProviderOrder_TransparentLogos.apk`
-- SHA-256 SportsTV: `756DBA12A406582EB0BAD4774ABE040BE33486FF211EDE2E0380C2564DC8B852`
+- Version code: `540`
+- Version name: `5.2.3-BinhPro.18-GETOUT-VIP-NoExtraSources-NoUpdate`
+- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_v540_GETOUT_VIP_Clean.apk`
+- SHA-256 SportsTV: `C41B1C784344D6A1869771F675576D1C9231778F42D61F20414024ECBC993D80`
 - Package duy nhất: `com.sports.tv`
-- Nội dung: SPORT STREAM TV 2.6 và GETOUT đều chạy trực tiếp bên trong SportsTV. Không cài app riêng, không xin quyền cài ứng dụng không rõ nguồn gốc và không có kích hoạt thứ hai. Giữ nguyên Film Activation, Cloudflare Worker, VietAnhTV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
+- Nội dung: SPORT STREAM TV 2.6 và GETOUT V.I.P đều chạy trực tiếp bên trong SportsTV. GetOut không còn kiểm tra, thông báo, tải hoặc cài bản cập nhật riêng. Các nguồn cũ THE THAO, TIVI, HIGHLIGHT, KK PHIM và MAM PHIM được dọn khỏi danh sách và không tự tạo lại. Giữ nguyên Film Activation, Cloudflare Worker, VietAnhTV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
 
 ## Cách mở SPORT STREAM
 
-1. Cập nhật SportsTV lên bản 536.
+1. Cập nhật SportsTV lên bản 540.
 2. Bấm thẻ **SPORT STREAM** nằm ngay sau **Thêm nguồn**.
 3. SPORT STREAM mở trực tiếp trong SportsTV, không có bước cài đặt ứng dụng phụ.
 4. Khi đang xem, Back trở về danh sách SPORT STREAM; Back thêm lần nữa về SportsTV ngay, không hỏi xác nhận thoát.
