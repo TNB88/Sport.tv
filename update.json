@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 541,
-  "version_name": "5.2.3-BinhPro.19-VietAnhTV-Playlist",
-  "title": "SportsTV Bình Pro — Nguồn Truyền Hình mới",
-  "message": "Thay nguồn của thẻ Truyền Hình bằng playlist VietAnhTV mới, tải đầy đủ nhóm VTV, HTV, VTVcab, SCTV và nhiều nhóm khác. Bỏ thẻ VietAnhTV cũ để không bị trùng; giữ nguyên Thanh TV, SPORT STREAM và GETOUT V.I.P.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v541_VietAnhTV.apk",
+  "version_code": 542,
+  "version_name": "5.2.3-BinhPro.20-GetOut-VIP-v10-NoUpdate",
+  "title": "SportsTV Bình Pro — Cập nhật GETOUT V.I.P",
+  "message": "Nâng cấp GETOUT V.I.P tích hợp từ version 8 lên version 10. Đã tắt hoàn toàn cập nhật riêng của GETOUT để không tải hoặc mở trình cài ứng dụng phụ. Giữ nguyên SPORT STREAM, Truyền Hình, Thanh TV, Film Activation và các bản vá phát kênh hiện có.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v542_GETOUT_VIP_v10_NoUpdate.apk",
   "required": false
 }
