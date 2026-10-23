@@ -1,9 +1,9 @@
 {
   "enabled": true,
-  "version_code": 542,
-  "version_name": "5.2.3-BinhPro.20-GetOut-VIP-v10-NoUpdate",
-  "title": "SportsTV Bình Pro — Cập nhật GETOUT V.I.P",
-  "message": "Nâng cấp GETOUT V.I.P tích hợp từ version 8 lên version 10. Đã tắt hoàn toàn cập nhật riêng của GETOUT để không tải hoặc mở trình cài ứng dụng phụ. Giữ nguyên SPORT STREAM, Truyền Hình, Thanh TV, Film Activation và các bản vá phát kênh hiện có.",
-  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v542_GETOUT_VIP_v10_NoUpdate.apk",
+  "version_code": 543,
+  "version_name": "5.2.3-BinhPro.21-GetOut-VIP-v10-EmbeddedFix",
+  "title": "SportsTV Bình Pro — Fix mở GETOUT V.I.P",
+  "message": "Sửa lỗi bấm GETOUT báo không thể mở hoặc tự quay lại SportTV. GETOUT V.I.P v10 nay chạy ổn định trực tiếp bên trong SportsTV; đã tắt thông báo, tải và cài cập nhật riêng của GETOUT. Giữ nguyên SPORT STREAM, Truyền Hình, Thanh TV, Film Activation và các bản vá phát kênh hiện có.",
+  "apk_url": "https://raw.githubusercontent.com/TNB88/Sport.tv/main/SportsTV_5.2.3_BinhPro_v543_GETOUT_VIP_v10_EmbeddedFix.apk",
   "required": false
 }

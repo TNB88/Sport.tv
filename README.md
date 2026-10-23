@@ -14,16 +14,16 @@ Muốn tắt ngay thông báo cập nhật chỉ cần đổi `enabled` về `fa
 
 ## Bản đang phát hành
 
-- Version code: `542`
-- Version name: `5.2.3-BinhPro.20-GetOut-VIP-v10-NoUpdate`
-- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_v542_GETOUT_VIP_v10_NoUpdate.apk`
-- SHA-256 SportsTV: `5B712EB21C5584559C223C184E14358E0D3E20E392C3E20EBFB4D044CC937ED4`
+- Version code: `543`
+- Version name: `5.2.3-BinhPro.21-GetOut-VIP-v10-EmbeddedFix`
+- Tệp cập nhật chính: `SportsTV_5.2.3_BinhPro_v543_GETOUT_VIP_v10_EmbeddedFix.apk`
+- SHA-256 SportsTV: `DCA29209D147F5842A954263DE29FA72FF1998C588960C2A008584F596CB6151`
 - Package duy nhất: `com.sports.tv`
-- Nội dung: nâng GETOUT V.I.P tích hợp từ versionCode 8 lên versionCode 10 và tắt toàn bộ luồng kiểm tra, tải, mở trình cài, cài bản chờ của updater GETOUT. SPORT STREAM TV 2.6 và GETOUT vẫn chạy trực tiếp bên trong SportsTV. Giữ nguyên nguồn Truyền Hình hiện tại, Film Activation, Cloudflare Worker, Thanh TV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
+- Nội dung: sửa lỗi GETOUT v10 không mở hoặc tự thoát khi chạy trong package SportsTV; khôi phục chế độ nhúng và V.I.P, đồng thời tắt thông báo/tải/cài cập nhật riêng của GETOUT. SPORT STREAM TV 2.6 và GETOUT vẫn chạy trực tiếp bên trong SportsTV. Giữ nguyên nguồn Truyền Hình hiện tại, Film Activation, Cloudflare Worker, Thanh TV, cache danh sách tức thời và các bản vá phát kênh của SportsTV.
 
 ## Cách mở SPORT STREAM
 
-1. Cập nhật SportsTV lên bản 542.
+1. Cập nhật SportsTV lên bản 543.
 2. Bấm thẻ **SPORT STREAM** nằm ngay sau **Thêm nguồn**.
 3. SPORT STREAM mở trực tiếp trong SportsTV, không có bước cài đặt ứng dụng phụ.
 4. Khi đang xem, Back trở về danh sách SPORT STREAM; Back thêm lần nữa về SportsTV ngay, không hỏi xác nhận thoát.
